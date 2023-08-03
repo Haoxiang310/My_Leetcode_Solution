@@ -18,3 +18,22 @@ class Solution {
         return res;
     }
 }
+
+class Solution {
+    List<List<Integer>> res = new ArrayList<>();
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        dfs(root,0);
+        return res;
+    }
+
+    public void dfs(TreeNode root, int step){
+        if(root==null) return;
+        if(step == res.size()){
+            res.add(new ArrayList<>());
+        }
+        res.get(step).add(root.val);
+        dfs(root.left,step+1);
+        dfs(root.right,step+1);
+        return;
+    }
+}
