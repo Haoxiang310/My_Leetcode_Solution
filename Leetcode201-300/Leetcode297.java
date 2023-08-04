@@ -38,3 +38,29 @@ public class Codec {
         return root;
     }
 }
+
+public class Codec {
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        if(root==null) return "#";
+        StringBuilder sb = new StringBuilder();
+        return sb.append(root.val).append(",").append(serialize(root.left)).append(",").append(serialize(root.right)).toString();
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        Queue<String> q = new LinkedList<>(Arrays.asList(data.split(",")));
+        return helper(q);
+    }
+
+    public TreeNode helper(Queue<String> q){
+        String s = q.poll();
+        if(s.equals("#")) return null;
+        TreeNode root = new TreeNode(Integer.valueOf(s));
+        root.left = helper(q);
+        root.right = helper(q);
+        return root;
+    }
+}
+

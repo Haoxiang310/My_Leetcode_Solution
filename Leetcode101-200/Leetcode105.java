@@ -21,3 +21,30 @@ class Solution {
         return root;
     }
 }
+
+//O(N) Solution
+class Solution {
+    int[] preorder, inorder;
+    int preorderIndex = 0;
+    //<inorder value, index>, reduce time complexity to O(N)
+    Map<Integer, Integer> map = new HashMap<>();
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        this.preorder = preorder;
+        this.inorder = inorder;
+        for(int i=0;i<inorder.length;i++){
+            map.put(inorder[i],i);
+        }
+        return buildHelper(0,inorder.length-1);
+    }
+
+    public TreeNode buildHelper(int inStart, int inEnd){
+        if(inStart > inEnd) return null;
+        TreeNode root = new TreeNode(preorder[preorderIndex++]);
+        int index = map.get(root.val);
+        root.left = buildHelper(inStart, index-1);
+        root.right = buildHelper(index+1, inEnd);
+        return root;
+    }
+}
+
