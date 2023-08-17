@@ -32,3 +32,30 @@ class Solution {
         return left!=null?left:right;
     }
 }
+
+//postorder one pass
+class Solution {
+    int cnt = 0;
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        TreeNode res = LCA(root, p, q);
+        return cnt == 2 ? res : null;
+    }
+    public TreeNode LCA(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null) {
+            return root;
+        }
+
+        TreeNode left = LCA(root.left, p, q);
+        TreeNode right = LCA(root.right, p, q);
+
+        if(root == p || root == q){
+            cnt++;
+            return root;
+        }
+        if(left != null && right != null) return root;
+        if(left != null) return left;
+        if(right != null) return right;
+
+        return null;
+    }
+}
