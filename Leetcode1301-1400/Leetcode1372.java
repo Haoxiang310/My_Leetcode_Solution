@@ -16,3 +16,23 @@ class Solution {
         return new int[]{leftSubRight + 1, rightSubLeft + 1};
     }
 }
+
+//use boolean variable to indicate next step
+//true: next left; false: next right
+class Solution {
+    int res = 0;
+    public int longestZigZag(TreeNode root) {
+        dfs(root,true);
+        dfs(root,false);
+        return res - 1;
+    }
+
+    public int dfs(TreeNode root, boolean next){
+        if(root == null) return 0;
+        int leftNext = dfs(root.left, true);
+        int rightNext = dfs(root.right, false);
+        res = Math.max(res, Math.max(leftNext, rightNext)+1);
+        if(!next) return leftNext+1;
+        else return rightNext+1;
+    }
+}
