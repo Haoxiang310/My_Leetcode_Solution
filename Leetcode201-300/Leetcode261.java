@@ -34,3 +34,38 @@ class Solution {
         return false;
     }
 }
+
+//UF Solution
+class Solution {
+    public boolean validTree(int n, int[][] edges) {
+        UF uf = new UF(n);
+        for(int[] edge: edges){
+            int x = edge[0], y = edge[1];
+            if(uf.find(x) == uf.find(y)) return false;
+            uf.union(x,y);
+        }
+        //排除森林
+        return edges.length == n - 1;
+    }
+}
+
+class UF{
+    int[] parent;
+
+    public UF(int n){
+        parent = new int[n];
+        for(int i=0;i<n;i++){
+            parent[i] = i;
+        }
+    }
+
+    public int find(int x){
+        if(parent[x] != x) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+
+    public void union(int x, int y){
+        int rootX = find(x), rootY = find(y);
+        parent[rootX] = rootY;
+    }
+}
